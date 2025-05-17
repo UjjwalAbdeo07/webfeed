@@ -1,0 +1,43 @@
+{% extends 'feed/base.html' %}
+{% block content %}
+    <div class="mb-6">
+        <form method="post" action="{% url 'create_post' %}">
+            {% csrf_token %}
+            {{ post_form.as_p }}
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Post</button>
+        </form>
+    </div>
+    {% for post in posts %}
+        <div class="bg-white p-4 mb-4 rounded shadow">
+            <p class="font-bold">{{ post.user.username }}</p>
+            <p class="text-gray-600 text-sm">{{ post.created_at }}</p>
+            <p class="my-2">{{ post.content }}</p>
+            <div class="flex items-center">
+                <form method="post" action="{% url 'like_post' post.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="text-blue-500">
+                        {% if user in post.like_set.all %}
+                            Unlike
+                        {% else %}
+                            Like
+                        {% endif %}
+                        ({{ post.like_set.count }})
+                    </button>
+                </form>
+                <span class="mx-4">|</span>
+                <form method="post" action="{% url 'add_comment' post.id %}">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Comment</button>
+                </form>
+            </div>
+            {% for comment in post.comment_set.all %}
+                <div class="ml-4 mt-2">
+                    <p class="font-bold">{{ comment.user.username }}</p>
+                    <p class="text-gray-600 text-sm">{{ comment.created_at }}</p>
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}
