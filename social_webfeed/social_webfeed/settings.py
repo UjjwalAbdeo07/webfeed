@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-8djuo-*2e%w2+#+y^x@uxj#)$#d6g@359vd*^n_h2km7@q@gm8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-13-127-9-17.ap-south-1.compute.amazonaws.com']
 
 
 # Application definition
@@ -77,7 +77,7 @@ WSGI_APPLICATION = "social_webfeed.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'social_webfeed',
+        'NAME': 'webfeeddb',
         'USER': 'root',
         'PASSWORD': 'Ujjwal@2003',  # Replace with your MySQL root password
         'HOST': 'localhost',
